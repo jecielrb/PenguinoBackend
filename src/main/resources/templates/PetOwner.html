@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Create Pet Owner</title>
+</head>
+<body>
+
+	<form method="post" th:action="@{/createOwner}" th:object="${petOwner}">
+		<input type="hidden" name="id" th:field="*{id}"> Name: <input
+			type="text" name="name" th:field="*{name}"><br> <input
+			type="submit" value="Save Owner!">
+	</form>
+
+	<div th:if="${petOwnerList!= null and !petOwnerList.empty}">
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+			</tr>
+			<tr th:each="po : ${petOwnerList}">
+				<td th:text="${po.id}"></td>
+				<td th:text="${po.name}"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
