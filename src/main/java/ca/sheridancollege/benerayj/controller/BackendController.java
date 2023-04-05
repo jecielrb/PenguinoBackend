@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import ca.sheridancollege.benerayj.bean.Pet;
 import ca.sheridancollege.benerayj.bean.PetOwner;
 import ca.sheridancollege.benerayj.repository.PetOwnerRepository;
+import ca.sheridancollege.benerayj.repository.PetRepository;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -16,19 +18,30 @@ import lombok.AllArgsConstructor;
 public class BackendController {
 	
 	@Autowired
-	private PetOwnerRepository poRepo;
+	private PetOwnerRepository ownerRepo;
+	
+	@Autowired
+	private PetRepository petRepo;
 	
 	@GetMapping("/")
 	public String petOwnerPage(Model model) {
 		model.addAttribute("petOwner", new PetOwner());
-		model.addAttribute("petOwnerList", poRepo.findAll());
+		model.addAttribute("petOwnerList", ownerRepo.findAll());
 		return "PetOwner.html";
 	}
 	
 	@PostMapping("/createOwner")
 	public String createOwner(Model model, @ModelAttribute PetOwner owner) {
 		owner.setId(null);
-		poRepo.save(owner);
+		ownerRepo.save(owner);
+		return "redirect:/";
+	}
+	
+	
+	@PostMapping("/createPet")
+	public String createPet(Model model, @ModelAttribute Pet pet) {
+		pet.setId(null);
+		petRepo.save(pet);
 		return "redirect:/";
 	}
 }
