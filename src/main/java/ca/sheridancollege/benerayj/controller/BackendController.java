@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.sheridancollege.benerayj.bean.BotRequest;
 import ca.sheridancollege.benerayj.bean.Pet;
 import ca.sheridancollege.benerayj.bean.PetOwner;
 import ca.sheridancollege.benerayj.repository.PetOwnerRepository;
 import ca.sheridancollege.benerayj.repository.PetRepository;
+import ca.sheridancollege.benerayj.requests.ChatGptResponse;
+import ca.sheridancollege.benerayj.services.BotServiceImpl;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -39,6 +42,25 @@ public class BackendController {
 		Pet p = petRepo.save(pet);
 		return "Record added at index " + p.getId();
 	}
+	
+	private final BotServiceImpl botService;
+
+	@PostMapping("/ask")
+	public String[] sendMessage(@RequestBody BotRequest botRequest) {
+		String[] question = {"give me a cute name for a penguin robot, use only one word please", "give me a one word name for a robot penguin arduino pet", "give me a one word name for a penguin", "give me a one word name for a robot pet", "give me a one word name for a penguin pet"};
+		String[] names = new String[5]; 
+		for(int i = 0; i < 5; i++) {
+			botRequest.setMessage(question[i]);
+			names[i] = botService.askQuestion(botRequest).getChoices().toString();
+		}
+		return names;
+		
+	}
+	
+//	@GetMapping(value={"/names", ""})
+//	public List<Pet> reccomendedNames(Model model) {
+//		return petRepo.findAll();
+//	}
 	
 	
 }
