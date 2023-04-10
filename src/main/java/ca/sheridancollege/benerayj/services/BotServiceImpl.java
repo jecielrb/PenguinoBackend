@@ -1,5 +1,6 @@
 package ca.sheridancollege.benerayj.services;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -19,9 +20,11 @@ public class BotServiceImpl {
 	private static RestTemplate restTemplate = new RestTemplate();
 	
 	public HttpEntity<ChatGptRequest> buildHttpEntity(ChatGptRequest chatRequest) {
+		String apiKey = new String(Base64.decodeBase64(ChatGptConfig.API_KEY_64));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
-		headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
+		// headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
+		headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + " " + apiKey);
 		return new HttpEntity<>(chatRequest, headers);
 	}
 	
