@@ -71,9 +71,7 @@ public class BackendController {
 
 	@GetMapping("/suggestNames/{size}")
 	public List<String> suggestNames(@PathVariable(name = "size") int suggestionSize) {
-		byte[] key = Base64.decodeBase64(ChatGptConfig.API_KEY_64);
-		System.out.println(new String(key));
-		ArrayList<String> names = new ArrayList<>(suggestionSize); 
+		List<String> names = new ArrayList<>(suggestionSize); 
 		for (String question : SUGGEST_NAME) {
 			BotRequest request = new BotRequest(question);
 
