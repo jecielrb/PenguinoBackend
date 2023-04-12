@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class BotRequest implements Serializable {
+	static final long serialVersionUID = 42L;
 	@NonNull
 	private String message;
 }
