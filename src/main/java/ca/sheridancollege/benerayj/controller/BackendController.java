@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.sheridancollege.benerayj.bean.BotRequest;
 import ca.sheridancollege.benerayj.bean.Pet;
-import ca.sheridancollege.benerayj.repository.PetOwnerRepository;
 import ca.sheridancollege.benerayj.repository.PetRepository;
 import ca.sheridancollege.benerayj.services.BotServiceImpl;
 import lombok.AllArgsConstructor;
