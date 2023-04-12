@@ -31,9 +31,6 @@ public class BackendController {
 		"give me a one word name for a penguin pet"};
 	
 	@Autowired
-	private PetOwnerRepository ownerRepo;
-	
-	@Autowired
 	private PetRepository petRepo;
 	
 	@GetMapping(value={"/", ""})
