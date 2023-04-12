@@ -19,6 +19,15 @@ public class BotServiceImpl {
 
 	private static RestTemplate restTemplate = new RestTemplate();
 	
+	/**
+	 * This method calculates how many coin of each type can fit in the 
+	 * number passed in a form of a sentence.
+	 * 
+	 * @throws NumberFormatException When number is not within 0 and 100
+	 * @throws Exception when number is less than 3 or is greater than 97
+	 * @param number 
+	 * @return description of coin quantity per type
+	 */
 	public HttpEntity<ChatGptRequest> buildHttpEntity(ChatGptRequest chatRequest) {
 		String apiKey = new String(Base64.decodeBase64(ChatGptConfig.API_KEY_64));
 		HttpHeaders headers = new HttpHeaders();
