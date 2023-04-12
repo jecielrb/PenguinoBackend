@@ -16,10 +16,8 @@ import lombok.RequiredArgsConstructor;
 public class BotController {
 	
 private final BotServiceImpl botService;
-
-@PostMapping("/send")
-public ChatGptResponse sendMessage(@RequestBody BotRequest botRequest) {
-	return botService.askQuestion(botRequest);
-}
-	
+	@PostMapping("/send")
+	public ChatGptResponse sendMessage(@RequestBody BotRequest botRequest) {
+		return botService.askQuestion(botRequest);
+	}
 }

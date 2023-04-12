@@ -11,5 +11,4 @@ public class ConnectionTestController {
     public String greet() {
         return "Hi!";
     }
-    
 }

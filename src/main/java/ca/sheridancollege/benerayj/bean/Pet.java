@@ -17,7 +17,6 @@ public class Pet {
 	
 	@Id
 	private String id;
-	
 	private String name;
 	private String personality; 
 	private int age;

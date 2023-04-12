@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 import ca.sheridancollege.benerayj.bean.Pet;
 
 @Repository
-public interface PetRepository extends MongoRepository<Pet, Long> {
-
-}
+public interface PetRepository extends MongoRepository<Pet, Long> {}

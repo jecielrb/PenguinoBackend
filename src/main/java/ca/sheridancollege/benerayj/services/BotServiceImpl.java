@@ -7,33 +7,25 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import ca.sheridancollege.benerayj.bean.BotRequest;
 import ca.sheridancollege.benerayj.configuration.ChatGptConfig;
 import ca.sheridancollege.benerayj.requests.ChatGptRequest;
 import ca.sheridancollege.benerayj.requests.ChatGptResponse;
 
-
 @Service
 public class BotServiceImpl {
-
 	private static RestTemplate restTemplate = new RestTemplate();
 	
-	/**
-	 * This method calculates how many coin of each type can fit in the 
-	 * number passed in a form of a sentence.
-	 * 
-	 * @throws NumberFormatException When number is not within 0 and 100
-	 * @throws Exception when number is less than 3 or is greater than 97
-	 * @param number 
-	 * @return description of coin quantity per type
-	 */
 	public HttpEntity<ChatGptRequest> buildHttpEntity(ChatGptRequest chatRequest) {
-		String apiKey = new String(Base64.decodeBase64(ChatGptConfig.API_KEY_64));
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
 		// headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
+
+		// Please replace the 2 following lines with the commented line above this once we are about 
+		// to make this repo public or once we figured out how to manage keys.
+		String apiKey = new String(Base64.decodeBase64(ChatGptConfig.API_KEY_64));
 		headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + " " + apiKey);
+		
 		return new HttpEntity<>(chatRequest, headers);
 	}
 	
@@ -57,5 +49,4 @@ public class BotServiceImpl {
 							ChatGptConfig.TEMPERATURE,
 							ChatGptConfig.TOP_P)));
 	}
-	
 }
