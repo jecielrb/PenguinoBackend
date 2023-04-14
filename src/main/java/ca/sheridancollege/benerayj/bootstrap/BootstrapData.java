@@ -15,10 +15,7 @@ public class BootstrapData implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
 		Pet sample = Pet.builder().name("Sample Pet").age(5).personality("Happy").build();
-		
 		petRepo.save(sample);
 
 	}

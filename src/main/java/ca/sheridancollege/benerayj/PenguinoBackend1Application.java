@@ -1,3 +1,14 @@
+/** 
+ * Project Name: PenguinoBackend
+ * Author(s): 
+ * Matthieu Constant
+ * Seiji Akakabe
+ * Jeciel Benrayan
+ * Gabe Moracca
+ * Date Created: 01/01/2023
+ * Description: A backend REST API for our Capstone project 2023
+ */
+
 package ca.sheridancollege.benerayj;
 
 import org.springframework.boot.SpringApplication;

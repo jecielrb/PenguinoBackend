@@ -1,5 +1,6 @@
 package ca.sheridancollege.benerayj.controller;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BotController {
 	
-private final BotServiceImpl botService;
-	@PostMapping("/send")
-	public ChatGptResponse sendMessage(@RequestBody BotRequest botRequest) {
-		return botService.askQuestion(botRequest);
-	}
+	/**
+
+    Sends a message to the chatbot service using HTTP POST method and returns a response object.
+    @param botRequest A BotRequest object containing the message text and any additional parameters.
+    @return A ChatGptResponse object containing the chatbot's response to the given message.
+    @throws DataAccessException If there is an error while accessing the chatbot service.
+    */
+    private final BotServiceImpl botService;
+
+@PostMapping("/send")
+public ChatGptResponse sendMessage(@RequestBody BotRequest botRequest) throws DataAccessException {
+return botService.askQuestion(botRequest);
+}
+
 }
