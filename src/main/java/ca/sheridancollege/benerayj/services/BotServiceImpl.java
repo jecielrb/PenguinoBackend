@@ -31,7 +31,6 @@ public class BotServiceImpl {
 		headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
 		// headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER +
 		// ChatGptConfig.API_KEY);
-
 		// Replace the following 2 lines with the commented line above once the
 		// repository is public or the API key is managed.
 		String apiKey = new String(Base64.decodeBase64(ChatGptConfig.API_KEY_64));
