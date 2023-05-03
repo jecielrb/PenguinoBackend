@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ca.sheridancollege.benerayj.bean.BotRequest;
+import ca.sheridancollege.benerayj.bean.Choice;
 import ca.sheridancollege.benerayj.bean.Pet;
 import ca.sheridancollege.benerayj.repository.PetRepository;
 import ca.sheridancollege.benerayj.services.BotServiceImpl;
