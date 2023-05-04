@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ca.sheridancollege.benerayj.bean.BotRequest;
+import ca.sheridancollege.benerayj.bean.Choice;
 import ca.sheridancollege.benerayj.bean.Pet;
 import ca.sheridancollege.benerayj.repository.PetRepository;
 import ca.sheridancollege.benerayj.services.BotServiceImpl;
@@ -51,7 +56,11 @@ public class BackendController {
 	 *                             repository.
 	 */
 	@GetMapping(value = { "/", "" })
-	public List<Pet> pet(Model model) throws DataAccessException {
+	public List<Pet> pet(Model model, @RequestParam String name) throws DataAccessException {
+		if (name != null) {
+			return petRepo.findByName(name);
+		}
+		
 		return petRepo.findAll();
 	}
 
@@ -81,18 +90,56 @@ public class BackendController {
 	 */
 	@GetMapping("/suggestNames/{size}")
 	public List<String> suggestNames(@PathVariable(name = "size") int suggestionSize) {
+		String q = "Generate " + suggestionSize + " names that fits a cute penguin companion. The output will be a JSON array.";
 		List<String> names = new ArrayList<>(suggestionSize);
-		for (String question : SUGGEST_NAME) {
-			BotRequest request = new BotRequest(question);
+		System.out.println("Hello?");
+		
 
-			// Formatting string from here
-			String name = botService.askQuestion(request).getChoices().get(0).getText().trim();
-			int invalidCharIdx = name.indexOf('.', 0);
-			if (invalidCharIdx > 0 && invalidCharIdx == name.lastIndexOf('.')) {
-				name = name.substring(0, name.length() - 1);
+		ObjectMapper o = new ObjectMapper();
+		String[] newNames = new String[suggestionSize];
+		
+		String json = "";
+		
+		// Handle GPT limit
+		try {
+			BotRequest req = new BotRequest(q);
+			// Fails when quota is reached
+			List<Choice> res = botService.askQuestion(req).getChoices();
+			if (res.size() > 0) {
+				json = res.get(0).toString();
 			}
+		} catch(Exception e) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("[\n");
+			for(int i = 0; i < suggestionSize; i++) {
+				sb.append("\t\"Foo\"");
+				if (i == suggestionSize - 1) {
+					sb.append("\n");
+				} else {
+					sb.append(",\n");
+				}
+			}
+			sb.append("]");
+			json = sb.toString();
+			System.out.println(json);
+		}
+		
+		// Handle Json deserialization failure
+		try {
+			newNames = o.readValue(json, String[].class);
+		} catch (JsonProcessingException e1) {
+			newNames = new String[suggestionSize];
+			for (int i = 0; i < suggestionSize; i++) {
+				newNames[i] = "ERROR";
+			}		
+			e1.printStackTrace();
+		}
+		
+		
+		for (String name : newNames) {
 			names.add(name);
 		}
+
 		return names;
 	}
 
